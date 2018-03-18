@@ -1,25 +1,12 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/labstack/echo"
+	r "github.com/ikaro/Usuarios/routers"
+	"github.com/labstack/echo/middleware"
 )
 
 func main() {
-	e := echo.New()
-
-	e.GET("/", home)
-
-	e.GET("/teste", testPage)
-
-	e.Start(":3000")
-}
-
-func home(c echo.Context) error {
-	return c.String(http.StatusOK, "<h1>Hello World!</h1>")
-}
-
-func testPage(c echo.Context) error {
-	return c.String(http.StatusOK, "Yes, you are into test page")
+	e := r.App
+	e.Use(middleware.Logger())
+	e.Logger.Fatal(e.Start(":3000"))
 }
