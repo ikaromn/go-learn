@@ -11,4 +11,7 @@ func init() {
 	App = echo.New()
 
 	App.GET("/", controllers.Home)
+
+	api := App.Group("/v1")
+	api.POST("/create", controllers.Create)
 }

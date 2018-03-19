@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/ikaro/usuarios/lib"
+	"github.com/ikaro/Usuarios/lib"
 )
 
 type Usuarios struct {
