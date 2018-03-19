@@ -3,6 +3,7 @@ package main
 import (
 	r "github.com/ikaro/Usuarios/routers"
 	"github.com/labstack/echo/middleware"
+	"upper.io/db.v3/mysql"
 )
 
 func main() {

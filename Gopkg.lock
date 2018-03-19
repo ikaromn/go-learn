@@ -8,6 +8,12 @@
   version = "v3.2.0"
 
 [[projects]]
+  name = "github.com/go-sql-driver/mysql"
+  packages = ["."]
+  revision = "a0583e0143b1624142adab07e0e97fe106d99561"
+  version = "v1.3"
+
+[[projects]]
   name = "github.com/labstack/echo"
   packages = [".","middleware"]
   revision = "a5d81b8d4a627f3f49dcb3164ef2bb5239682227"
@@ -55,9 +61,15 @@
   packages = ["unix"]
   revision = "2f1e207ee39ff70f3433e49c6eb52677a515e3b5"
 
+[[projects]]
+  name = "upper.io/db.v3"
+  packages = [".","internal/immutable"]
+  revision = "bba00b389f7e9cfdd8988e08c2832ab39119d7cf"
+  version = "v3.5.2"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9e2da24a295681c3341a7ccb939e263dde0fd76dcfc465e7f241aa4be03ab511"
+  inputs-digest = "11b8b82b84b349ce045ed33ff609c81fb9beb56c6d8eaee35b1370de22bc70ee"
   solver-name = "gps-cdcl"
   solver-version = 1
