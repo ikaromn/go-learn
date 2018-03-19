@@ -7,9 +7,20 @@ import (
 )
 
 func Home(c echo.Context) error {
+	var usuarios []models.Usuarios
 
-	return c.HTML(http.StatusOK,
-		"<h1>Hello World!</h1><h2>Hello Leticia!</h2>")
+	if err := models.UsuarioModel.Find().All(&usuarios); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"mensagem": "Erro ao tentar recuperar os dados",
+		})
+	}
+
+	data := map[string]interface{}{
+		"title" : "Listagem de Usuários",
+		"usuarios": usuarios,
+	}
+
+	return c.Render(http.StatusOK, "index.html", data)
 }
 
 func Create(c echo.Context) error {
