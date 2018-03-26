@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"strconv"
 	"net/http"
 	"github.com/ikaro/Usuarios/models"
 	"github.com/labstack/echo"
@@ -46,5 +47,27 @@ func Create(c echo.Context) error {
 
 	return c.JSON(http.StatusBadRequest, map[string]string{
 			"mensagem" : "Informe os dados nos campos",
+	})
+}
+
+func Delete(c echo.Context) error {
+	usuarioID, _ := strconv.Atoi(c.Param("id"))
+
+	result := models.UsuarioModel.Find("id=?", usuarioID)
+
+	if count, _ := result.Count(); count < 1 {
+		return c.JSON(http.StatusNotFound, map[string]string{
+			"mensagem" : "Não foi possivel encontrar o usuario",
+		})
+	}
+
+	if err := result.Delete(); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"mensagem": "Não foi possivel deletar o usuario",
+		})
+	}
+
+	return c.JSON(http.StatusAccepted, map[string]string{
+		"mensagem": "Usuário deletado com sucesso!",
 	})
 }
