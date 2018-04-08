@@ -1,37 +1,60 @@
 {% extends "base.html" %}
 
 {% block title %}
-	{{title}}
+    {{title}}
 {% endblock %}
 
 {% block body %}
 
-<div class="jumbotron">
-    <div class="container">
-        <h1>Lista de Usuários</h1>
-        
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                	{% for usuario in usuarios %}
-                    <tr>
-                        <td>{{usuario.ID}}</td>
-                        <td>{{usuario.Name}}</td>
-                        <td>{{usuario.Email}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+<div class="container">
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Lista de Usuários</h1>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Ferramentas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios %}
+                        <tr id="usuario-row-{{usuario.ID}}">
+                            <td>{{usuario.ID}}</td>
+                            <td>{{usuario.Name}}</td>
+                            <td>{{usuario.Email}}</td>
+                            <td>
+                                <a class="btn btn-lg btn-danger" onclick="deleteUser('{{usuario.ID}}')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
         </div>
-        
     </div>
 </div>
+
+{% endblock %}
+
+{% block js%}
+
+    <script>
+        function deleteUser(userId) {
+            $.ajax({
+                url: "/v1/delete/" + userId,
+                method: "DELETE",
+                success: function(){
+                    $('#usuario-row-' + userId).remove();
+                }
+            })
+        }
+    </script>
 
 {% endblock %}
