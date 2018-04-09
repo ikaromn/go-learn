@@ -39,6 +39,9 @@
                                 <a class="btn btn-sm btn-danger" onclick="deleteUser('{{usuario.ID}}')">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
+                                <a class="btn btn-sm btn-warning" href="/update/{{usuario.ID}}">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}

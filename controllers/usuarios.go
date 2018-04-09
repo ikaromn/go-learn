@@ -71,6 +71,61 @@ func Delete(c echo.Context) error {
 	})
 }
 
+func Update(c echo.Context) error {
+	userId, _ := strconv.Atoi(c.Param("id"))
+	nome := c.FormValue("name")
+	email := c.FormValue("email")
+
+	user := models.Usuarios{
+		ID:    userId,
+		Name:  nome,
+		Email: email,
+	}
+
+	result := models.UsuarioModel.Find("id=?", userId)
+
+	if count, _ := result.Count(); count < 1 {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"mensagem": "Usuário não existe",
+		})
+	}
+
+	if err := result.Update(user); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"mensagem": "Erro ao tentar atualizar o usuário",
+		})
+	}
+
+	return c.JSON(http.StatusAccepted, user)
+}
+
 func Add(c echo.Context) error {
 	return c.Render(http.StatusOK, "add.html", nil)
+}
+
+func UpdateController(c echo.Context) error {
+
+	userId, _ := strconv.Atoi(c.Param("id"))
+
+	result := models.UsuarioModel.Find("id=?", userId)
+
+	if count, _ := result.Count(); count < 1 {
+		return c.JSON(http.StatusNotFound, map[string]string{
+			"mensagem": "Usuário não existe",
+		})
+	}
+
+	var user models.Usuarios
+
+	if err := result.One(&user); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"mensagem": "Usuário não encontrado",
+		})
+	}
+
+	data := map[string]interface{}{
+		"usuario": user,
+	}
+
+	return c.Render(http.StatusOK, "update.html", data)
 }
