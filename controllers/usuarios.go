@@ -1,8 +1,9 @@
 package controllers
 
 import (
-	"strconv"
 	"net/http"
+	"strconv"
+
 	"github.com/ikaro/Usuarios/models"
 	"github.com/labstack/echo"
 )
@@ -17,7 +18,7 @@ func Home(c echo.Context) error {
 	}
 
 	data := map[string]interface{}{
-		"title" : "Listagem de Usuários",
+		"title":    "Listagem de Usuários",
 		"usuarios": usuarios,
 	}
 
@@ -36,17 +37,15 @@ func Create(c echo.Context) error {
 	if name != "" && email != "" {
 		if _, err := models.UsuarioModel.Insert(usuario); err != nil {
 			return c.JSON(http.StatusBadRequest, map[string]string{
-				"mensagem" : "Não foi possivel adicionar os dados no banco, tente novamente!",
+				"mensagem": "Não foi possivel adicionar os dados no banco, tente novamente!",
 			})
 		}
 
-		return c.JSON(http.StatusCreated, map[string]string{
-			"mensagem": "Os dados foram salvos com sucesso",
-		})
+		return c.Redirect(http.StatusFound, "/")
 	}
 
 	return c.JSON(http.StatusBadRequest, map[string]string{
-			"mensagem" : "Informe os dados nos campos",
+		"mensagem": "Informe os dados nos campos",
 	})
 }
 
@@ -57,7 +56,7 @@ func Delete(c echo.Context) error {
 
 	if count, _ := result.Count(); count < 1 {
 		return c.JSON(http.StatusNotFound, map[string]string{
-			"mensagem" : "Não foi possivel encontrar o usuario",
+			"mensagem": "Não foi possivel encontrar o usuario",
 		})
 	}
 
@@ -70,4 +69,8 @@ func Delete(c echo.Context) error {
 	return c.JSON(http.StatusAccepted, map[string]string{
 		"mensagem": "Usuário deletado com sucesso!",
 	})
+}
+
+func Add(c echo.Context) error {
+	return c.Render(http.StatusOK, "add.html", nil)
 }

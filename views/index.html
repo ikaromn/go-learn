@@ -4,10 +4,19 @@
     {{title}}
 {% endblock %}
 
+{% block css %}
+    <style type="text/css">
+        .create-button{
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
 
 <div class="container">
     <div class="jumbotron">
+        <a href="/add" class="create-button btn btn-success btn-lg">Novo Usuário</a>
         <div class="container">
             <h1>Lista de Usuários</h1>
             <div class="table-responsive">
@@ -27,8 +36,8 @@
                             <td>{{usuario.Name}}</td>
                             <td>{{usuario.Email}}</td>
                             <td>
-                                <a class="btn btn-lg btn-danger" onclick="deleteUser('{{usuario.ID}}')">
-                                    <i class="fas fa-trash-alt"></i>
+                                <a class="btn btn-sm btn-danger" onclick="deleteUser('{{usuario.ID}}')">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>
                         </tr>
